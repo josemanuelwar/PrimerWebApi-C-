@@ -31,7 +31,11 @@ namespace WebAPIAutores.Controllers
         }
 
         [HttpGet("primero")]
-        public async Task<ActionResult<Autor>> Primero(){
+        /** para un query string es pasa de la siguiente forma 
+            api/autor/primero?nombre=jose&apellido=sanchez
+         */
+        public async Task<ActionResult<Autor>> PrimeroAutor([FromHeader] int miValor, 
+        [FromQuery] string nombre){
             return await this.context.Autores.FirstOrDefaultAsync();
         }
 
@@ -60,7 +64,7 @@ namespace WebAPIAutores.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Autor autor)
+        public async Task<ActionResult> Post([FromBody]Autor autor)
         {
             this.context.Add(autor);
             await this.context.SaveChangesAsync();
